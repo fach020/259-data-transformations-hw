@@ -15,7 +15,10 @@ ds <- read_csv("data_raw/rolling_stone_500.csv")
 #Then, convert it to a numeric, saving it back to 'ds'
 #Use typeof to check that your conversion succeeded
 
-#ANSWER
+glimpse(ds)
+ds <- mutate(ds, Year = as.numeric(str_remove_all(Year, "[^0-9]")))
+typeof(ds$Year)
+is.numeric(ds$Year)
 
 
 ### Question 2 ---------- 
@@ -23,7 +26,8 @@ ds <- read_csv("data_raw/rolling_stone_500.csv")
 # Using a dplyr function,
 # change ds so that all of the variables are lowercase
 
-#ANSWER
+ds <- ds %>% rename_all(tolower)
+
 
 ### Question 3 ----------
 
@@ -31,20 +35,22 @@ ds <- read_csv("data_raw/rolling_stone_500.csv")
 # For example, 1971 would become 1970, 2001 would become 2000
 # Hint: read the documentation for ?floor
 
-#ANSWER
+ds <- mutate(ds, year = year - 1)
+
 
 ### Question 4 ----------
 
 # Sort the dataset by rank so that 1 is at the top
 
-#ANSWER
+ds <- arrange(ds, rank)
+
 
 ### Question 5 ----------
 
 # Use filter and select to create a new tibble called 'top10'
 # That just has the artists and songs for the top 10 songs
 
-#ANSWER
+top10 <- filter(ds, rank <= 10) %>% select(artist, song)
 
 
 ### Question 6 ----------
@@ -52,7 +58,7 @@ ds <- read_csv("data_raw/rolling_stone_500.csv")
 # Use summarize to find the earliest, most recent, and average release year
 # of all songs on the full list. Save it to a new tibble called "ds_sum"
 
-#ANSWER
+ds_sum <- summarize(ds, earliest = min(year), most_recent = max(year), average = mean(year))
 
 
 ### Question 7 ----------
@@ -61,7 +67,7 @@ ds <- read_csv("data_raw/rolling_stone_500.csv")
 # recent, and average-ist years in the data set (the values obtained in Q6). 
 # Use one filter command only, and sort the responses by year
 
-#ANSWER
+filter(ds, year == 1878 | year == 2019 | year == 1979) %>% arrange(year)
 
 
 ### Question 8 ---------- 

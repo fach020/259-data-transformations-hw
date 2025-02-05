@@ -35,7 +35,8 @@ ds <- ds %>% rename_all(tolower)
 # For example, 1971 would become 1970, 2001 would become 2000
 # Hint: read the documentation for ?floor
 
-ds <- mutate(ds, year = year - 1)
+?floor
+ds <- mutate(ds, decade = floor(year/10)*10)
 
 
 ### Question 4 ----------
@@ -67,7 +68,7 @@ ds_sum <- summarize(ds, earliest = min(year), most_recent = max(year), average =
 # recent, and average-ist years in the data set (the values obtained in Q6). 
 # Use one filter command only, and sort the responses by year
 
-filter(ds, year == 1878 | year == 2019 | year == 1979) %>% arrange(year)
+filter(ds, year == 1879 | year == 2020 | year == 1980) %>% arrange(year)
 
 
 ### Question 8 ---------- 
